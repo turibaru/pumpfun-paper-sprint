@@ -368,6 +368,7 @@ export function createStrategy(p: Params = DEFAULT_PARAMS): Bot {
             creatorSoldNow.add(e.mint);
           }
           c.trades.push({ slot: e.slot, isBuy: e.is_buy, sol, user: e.user });
+          while (c.trades.length > 0 && c.trades[0].slot <= now - p.flowWindow) c.trades.shift();
           if (e.is_buy) c.buyLamports += sol;
           else c.sellLamports += sol;
           c.lastTradeSlot = e.slot;
